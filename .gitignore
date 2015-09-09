@@ -11,3 +11,4 @@ pom.xml
 docs
 .DS_Store
 config.clj
+.nrepl-port

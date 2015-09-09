@@ -1,4 +1,0 @@
-{
-  :key "YOURKEY"
-  :token "YOURTOKEN"
-}

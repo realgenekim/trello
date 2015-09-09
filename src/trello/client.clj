@@ -8,14 +8,6 @@
 (def base-url "https://api.trello.com/1/")
 (def authorize-url "https://trello.com/1/authorize")
 
-(defn authorize! 
-  "Fetch the OAuth URL we need to get our token"
-  [token]
-  (let [base "https://trello.com/1/authorize"
-        params "%s?key=%s&name=My+Application&expiration=never&response_type=token&scope=read,write"
-        url (format params base token)]
-    url))
-
 (defn full-url 
   "Get the full api url given an endpoint"
   [endpoint]
