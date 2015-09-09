@@ -1,3 +1,5 @@
+# WIP - not yet stable, or even working
+
 # Trello
 
 Clojure wrapper for the Trello API.
