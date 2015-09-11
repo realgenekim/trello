@@ -27,20 +27,39 @@ user> (def client (make-client (:key auth) (:secret auth)))
 #<Var@7d383c5d: #object[trello.core$callfn 0x6823295a "trello.core$callfn@6823295a"]>
 ```
 
-With this client, you can make any request to a public Trello board that you want. Until I get around to building the API docs, look through the source code to see how each Trello resource is accessed. This library is self-descriptive, meaning that each namespace refers to a resource, and each function in a namespace refers to an endpoint.
-
-Once I reach v1.0.0, then all of the Trello API will be implemented. Until then, you can call specific API endpoints with `trello.client/api-call`
+With this client, you can make any request to a public Trello board that you want. You just need to use `trello.client/get`, which takes a resource as a string and an optional map of `:params`:
 
 ```clojure
-user> (doc trello.client/api-call)
+user> (require '[trello.client :as t])
+nil
+user> (doc t/get)
+-------------------------
+trello.client/get
+([resource & {params :params}])
+  Calls a Trello API resource with optional params.
+nil
+user> (client t/get "boards/Tb4b74V5" :params {:members "all"})
+{:closed false,
+ :desc "",
+ :pinned false,
+ :name "My Trello Board",
+...}
+
+```
+
+You can have more fine-grained control over calling specific API endpoints with `trello.client/api-call`
+
+```clojure
+user> (doc t/api-call)
 -------------------------
 trello.client/api-call
 ([method path & {:keys [params payload]}])
-  Calls the Trello API with the provided endpoint and params. Returns
-  the response as a Clojure data structure (automatically parses the
-  JSON response with clojure.data.json)
+  Calls the Trello API with the provided endpoint, HTTP method, and
+  params. Returns the response as a Clojure data
+  structure (automatically parses the JSON response with
+  clojure.data.json)
 nil
-user> (client trello.client/api-call :GET "boards/my-board-id")
+user> (client t/api-call :GET "boards/my-board-id")
 {:closed false,
  :desc "",
  :pinned false,

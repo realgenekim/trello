@@ -37,10 +37,11 @@
     {:api_key (:key @consumer)}))
 
 (defn api-call
-  "Calls the Trello API with the provided endpoint and params. Returns
-  the response as a Clojure data structure (automatically parses the
-  JSON response with clojure.data.json)" 
-  {:author "Daniel Szmulewicz <https://github.com/danielsz>"}
+  "Calls the Trello API with the provided endpoint, HTTP method, and
+  params. Returns the response as a Clojure data
+  structure (automatically parses the JSON response with
+  clojure.data.json)" {:author "Daniel Szmulewicz
+  <https://github.com/danielsz>"}
   [method path & {:keys [params payload]}]
   (when-not (seq @consumer) 
     (throw (Throwable. "You must create a consumer first (Trello API key + secret).")))
@@ -53,3 +54,17 @@
       :POST
       :PUT
       :DELETE)))
+
+(defn get
+  "Calls a Trello API resource with optional params."
+  [resource & {params :params}]
+  (api-call :GET resource :params params))
+
+(defn post [resource & {params :params}]
+  (api-call :POST resource :params params))
+
+(defn put [resource & {params :params}]
+  (api-call :PUT resource :params params))
+
+(defn delete [resource & {params :params}]
+  (api-call :DELETE resource :params params))
