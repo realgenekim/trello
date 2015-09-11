@@ -37,6 +37,9 @@
     {:api_key (:key @consumer)}))
 
 (defn api-call
+  "Calls the Trello API with the provided endpoint and params. Returns
+  the response as a Clojure data structure (automatically parses the
+  JSON response with clojure.data.json)" 
   {:author "Daniel Szmulewicz <https://github.com/danielsz>"}
   [method path & {:keys [params payload]}]
   (when-not (seq @consumer) 

@@ -8,8 +8,15 @@
 (def ^:dynamic *oauth-token*)
 (def ^:dynamic *oauth-secret*)
 
+(defn callfn [f & args] (apply f args))
+
 (defn make-consumer [key secret]
+  {:author "Daniel Szmulewicz <https://github.com/danielsz>"}
   (reset! consumer {:key key :secret secret}))
+
+(defn make-client [consumer-key consumer-secret]
+  (make-consumer consumer-key consumer-secret)
+  callfn)
 
 (defmacro with-user
   "Sets the user OAuth access token for write access and for accessing private user data."
