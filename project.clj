@@ -9,6 +9,4 @@
                  [org.clojure/data.json "0.2.5"]
                  [org.clojure/tools.cli "0.3.3"]]
   :scm {:name "git"
-        :url "https://github.com/bsima/trello"}
-  :plugins [[refactor-nrepl "1.2.0-SNAPSHOT"]
-            [cider/cider-nrepl "0.10.0-SNAPSHOT"]])
+        :url "https://github.com/bsima/trello"})
