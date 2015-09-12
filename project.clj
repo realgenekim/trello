@@ -1,4 +1,4 @@
-(defproject trello "0.2.0"
+(defproject me.bsima/trello "0.2.0"
   :description "Clojure wrapper for the Trello API"
   :url "https://github.com/bsima/trello"
   :license {:name "Eclipse Public License"
