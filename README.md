@@ -9,7 +9,7 @@ Clojure wrapper for the Trello API.
 Trello is available from Clojars.org. To use it, add the following as a dependency in Leiningen or Boot.
 
 ```clojure
-[me.bsima/trello "0.2.0"]
+[me.bsima/trello "0.2.1"]
 ```
 
 # Usage

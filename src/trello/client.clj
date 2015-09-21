@@ -1,28 +1,31 @@
 (ns trello.client
   (:require
+   [clojure.core.typed :refer [ann cf check-ns U Keyword HMap Val Any Map]]
    [clj-http.client :as client]
    [trello.core :refer [consumer *oauth-token* *oauth-secret*]]
    [oauth.client :as oauth]
    [clojure.data.json :as json]))
 
+;; prevent these from blowing up the type checker
+(ann ^:no-check clj-http.client/get [Any * -> Any])
+(ann ^:no-check oauth.client/credentials [Any * -> Any])
+(ann ^:no-check oauth.client/make-consumer [Any * -> Any])
+(ann ^:no-check clojure.data.json/read-str [Any * -> Any])
+
+(ann base-url String)
 (def base-url "https://api.trello.com/1/")
+
+(ann authorize-url String)
 (def authorize-url "https://trello.com/1/authorize")
 
+(ann full-url [String -> String])
 (defn full-url 
   "Get the full api url given an endpoint"
   [endpoint]
   (apply str [base-url endpoint]))
 
-(defn request-builder 
-  "Builds a request to be executed by a HTTP client"
-  [auth method url & params]
-  (let [query-params (merge auth (into {} params))]
-    (assert (keyword? method))
-    {:method method
-     :as :json
-     :query-params query-params
-     :url url}))
-
+;; not sure about this one...
+(ann ^:no-check sign [Any Any Any -> (U Any (HMap :mandatory {:api_key Any} :complete? true))])
 (defn sign [method uri params]
   {:author "Daniel Szmulewicz <https://github.com/danielsz>"}
   (if (bound? #'*oauth-token* #'*oauth-secret*)
@@ -36,6 +39,8 @@
       (oauth/credentials consumer *oauth-token* *oauth-secret* method uri params))
     {:api_key (:key @consumer)}))
 
+;; not sure about this one
+(ann ^:no-check api-call [Keyword String & :optional {:params Any :payload Any} -> Any])
 (defn api-call
   "Calls the Trello API with the provided endpoint, HTTP method, and
   params. Returns the response as a Clojure data
@@ -55,16 +60,18 @@
       :PUT
       :DELETE)))
 
-(defn get
-  "Calls a Trello API resource with optional params."
-  [resource & {params :params}]
+(ann get [String & :optional {:params Map} -> Any])
+(defn get [resource & {params :params}]
   (api-call :GET resource :params params))
 
+(ann post [String & :optional {:params Map} -> Any])
 (defn post [resource & {params :params}]
   (api-call :POST resource :params params))
 
+(ann put [String & :optional {:params Map} -> Any])
 (defn put [resource & {params :params}]
   (api-call :PUT resource :params params))
 
+(ann delete [String & :optional {:params Map} -> Any])
 (defn delete [resource & {params :params}]
   (api-call :DELETE resource :params params))

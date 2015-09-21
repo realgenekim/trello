@@ -1,4 +1,4 @@
-(defproject me.bsima/trello "0.2.0"
+(defproject me.bsima/trello "0.2.1"
   :description "Clojure wrapper for the Trello API"
   :url "https://github.com/bsima/trello"
   :license {:name "Eclipse Public License"
@@ -6,6 +6,7 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [clj-http "2.0.0"]
                  [clj-oauth "1.5.2"]
+                 [org.clojure/core.typed "0.3.11"]
                  [org.clojure/data.json "0.2.5"]
                  [org.clojure/tools.cli "0.3.3"]]
   :scm {:name "git"
