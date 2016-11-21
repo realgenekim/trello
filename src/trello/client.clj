@@ -39,6 +39,14 @@
       (oauth/credentials consumer *oauth-token* *oauth-secret* method uri params))
     {:api_key (:key @consumer)}))
 
+(defn- lowercase-keyword
+  "Converts keyword without namespace to lowercase keyword (like :ABC -> :abc)."
+  [kw]
+  (-> kw
+    name
+    clojure.string/lower-case
+    keyword))
+
 ;; not sure about this one
 (ann ^:no-check api-call [Keyword String & :optional {:params Any :payload Any} -> Any])
 (defn api-call
@@ -51,14 +59,12 @@
   (when-not (seq @consumer) 
     (throw (Throwable. "You must create a consumer first (Trello API key + secret).")))
   (let [uri (str base-url path)
-        options {:query-params (merge params (sign method uri params))}]
-    (case method
-      :GET (-> (client/get uri options)
-               (:body)
-               (json/read-str :key-fn keyword))
-      :POST
-      :PUT
-      :DELETE)))
+        options {:url uri
+                 :method (lowercase-keyword method)
+                 :query-params (merge params (sign method uri params))}]
+    (-> (client/request options)
+      (:body)
+      (json/read-str :key-fn keyword))))
 
 (ann get [String & :optional {:params Map} -> Any])
 (defn get [resource & {params :params}]
