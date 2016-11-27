@@ -12,3 +12,4 @@ docs
 .DS_Store
 config.clj
 .nrepl-port
+pom.xml.asc
