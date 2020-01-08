@@ -55,13 +55,16 @@
   structure (automatically parses the JSON response with
   clojure.data.json)" {:author "Daniel Szmulewicz
   <https://github.com/danielsz>"}
-  [method path & {:keys [params payload]}]
+  [method path & {:keys [params payload args]}]
   (when-not (seq @consumer) 
     (throw (Throwable. "You must create a consumer first (Trello API key + secret).")))
   (let [uri (str base-url path)
-        options {:url uri
-                 :method (lowercase-keyword method)
-                 :query-params (merge params (sign method uri params))}]
+        _   (println "*** api-call: params: " params)
+        _   (println "*** api-call: args: " args)
+        options (merge args
+                       {:url uri
+                        :method (lowercase-keyword method)
+                        :query-params (merge params (sign method uri params))})]
     (-> (client/request options)
       (:body)
       (json/read-str :key-fn keyword))))
@@ -81,3 +84,6 @@
 (ann delete [String & :optional {:params Map} -> Any])
 (defn delete [resource & {params :params}]
   (api-call :DELETE resource :params params))
+
+(def genek-test "abc")
+(def genek-test2 "abc")

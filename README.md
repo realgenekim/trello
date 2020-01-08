@@ -4,6 +4,12 @@ Clojure wrapper for the Trello API.
 
 [Official Trello Docs](https://trello.com/docs/index.html) | [Official Trello API Reference](https://trello.com/docs/api/index.html)
 
+This was forked from https://github.com/bsima/trello
+
+- converted to deps.edn (through lein-tools-deps), so that it can be included in a project deps.edn file without uplaoding to Maven Central
+- added :options to all Trello calls, to support operations such as multipart uploads
+
+
 ## Usage
 
 Trello is available from Clojars.org. To use it, add the following as a dependency in Leiningen or Boot.
