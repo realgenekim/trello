@@ -1,7 +1,7 @@
 {:deps
  {compojure              {:mvn/version "1.6.1"}
   clj-http               {:mvn/version "3.10.0"}
-  clj-oauth              {:mvn/version "1.5.2"}
-  org.clojure/core.typed {:mvn/version "0.3.11"}
-  org.clojure/data.json  {:mvn/version "0.2.5"}
-  org.clojure/tools.cli  {:mvn/version "0.3.3"}}}
+  clj-oauth              {:mvn/version "1.5.5"}
+  org.clojure/core.typed {:mvn/version "0.6.0"}
+  org.clojure/data.json  {:mvn/version "0.2.7"}
+  org.clojure/tools.cli  {:mvn/version "0.4.2"}}}
